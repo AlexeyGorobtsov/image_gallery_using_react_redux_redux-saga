@@ -1,19 +1,21 @@
 import React, {Component} from 'react';
 
-const flickrImages = [
-    'https://farm2.staticflickr.com/1581/25283151224_50f8da511e.jpg',
-    'https://farm2.staticflickr.com/1653/25265109363_f204ea7b54.jpg',
-    'https://farm2.staticflickr.com/1571/25911417225_a74c8041b0.jpg',
-    'https://farm2.staticflickr.com/1450/25888412766_44745cbca3.jpg',
-];
+import { fetchImg } from '../api/index';
 
 export class Gallery extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            images: flickrImages,
-            selectedImage: flickrImages[0],
+            images: [],
+            selectedImage: null,
         }
+    }
+
+    componentDidMount() {
+        fetchImg().then(response => {
+            const images = response;
+            this.setState({images, selectedImage: images[0]})
+        });
     }
 
     handleThumbClick = selectedImage => {
@@ -28,7 +30,11 @@ export class Gallery extends Component {
             <div className={'image-gallery'}>
                 <div className="gallery-image">
                     <div>
-                        <img src={selectedImage} alt="picture"/>
+                        {
+                            selectedImage
+                                ? <img src={selectedImage} alt="picture"/>
+                                : false
+                        }
                     </div>
                 </div>
                 <div className="image-scroller">

@@ -1,31 +1,17 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux';
 
 import { fetchImg } from '../api/index';
 
 export class Gallery extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            images: [],
-            selectedImage: null,
-        }
+        this.props.dispatch({type: 'TEST'});
+        console.log(props)
     }
-
-    componentDidMount() {
-        fetchImg().then(response => {
-            const images = response;
-            this.setState({images, selectedImage: images[0]})
-        });
-    }
-
-    handleThumbClick = selectedImage => {
-      this.setState({
-          selectedImage
-      })
-    };
 
     render() {
-        const {images, selectedImage} = this.state;
+        const {images, selectedImage} = this.props;
         return (
             <div className={'image-gallery'}>
                 <div className="gallery-image">
@@ -39,7 +25,7 @@ export class Gallery extends Component {
                 </div>
                 <div className="image-scroller">
                     {images.map((image, i) => (
-                        <div key={i} onClick={() => this.handleThumbClick(image)}>
+                        <div key={i}>
                             <img src={image}/>
                         </div>
                     ))}
@@ -48,3 +34,7 @@ export class Gallery extends Component {
         );
     }
 }
+
+const mapStateToProps = state => ({images: state.images, selectedImage: state.selectedImage});
+
+export default connect(mapStateToProps)(Gallery)

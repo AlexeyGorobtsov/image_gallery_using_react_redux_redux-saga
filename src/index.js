@@ -3,7 +3,7 @@ import ReactDom from 'react-dom';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 
-import { Gallery } from './components/Gallery';
+import Gallery from './components/Gallery';
 import { images } from './redusers/reduser';
 
 const store = createStore(images);

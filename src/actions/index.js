@@ -1,23 +1,15 @@
-let nextTodoId = 0;
+export const IMAGE_SELECTED = 'IMAGE_SELECTED';
+export const LOAD_IMAGES = 'LOAD_IMAGES';
 
-export const addTodo = (text) => {
-    return {
-        type: 'ADD_TODO',
-        id: (nextTodoId++).toString(),
-        text
-    }
+export const selectImage = image => {
+  return {
+      type: IMAGE_SELECTED,
+      image,
+  };
 };
 
-export const setVisibilityFilter = (filter) => {
+export function loadImages() {
     return {
-        type: 'SET_VISIBILITY_FILTER',
-        filter
+        type: LOAD_IMAGES
     }
-};
-
-export const toggleTodo = (id) => {
-    return {
-        type: 'TOGGLE_TODO',
-        id
-    }
-};
+}

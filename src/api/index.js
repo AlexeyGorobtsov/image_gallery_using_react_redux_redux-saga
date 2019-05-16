@@ -10,4 +10,3 @@ const delay = ms =>
 export const fetchImg = () =>
     delay(500)
         .then(() => flickrImages);
-//console.log(fetchImg());

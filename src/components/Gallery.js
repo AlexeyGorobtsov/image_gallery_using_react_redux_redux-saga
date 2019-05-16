@@ -1,17 +1,19 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-import { fetchImg } from '../api/index';
+import * as GalleryActions from '../actions';
 
 export class Gallery extends Component {
-    constructor(props) {
-        super(props);
-        this.props.dispatch({type: 'TEST'});
-        console.log(props)
+
+    componentDidMount() {
+        console.log(this)
+        this.props.loadImages();
     }
 
     render() {
-        const {images, selectedImage} = this.props;
+        const { images, selectedImage, selectImage } = this.props;
+
         return (
             <div className={'image-gallery'}>
                 <div className="gallery-image">
@@ -25,7 +27,7 @@ export class Gallery extends Component {
                 </div>
                 <div className="image-scroller">
                     {images.map((image, i) => (
-                        <div key={i}>
+                        <div key={i} onClick={() => selectImage(image)}>
                             <img src={image}/>
                         </div>
                     ))}
@@ -36,5 +38,6 @@ export class Gallery extends Component {
 }
 
 const mapStateToProps = state => ({images: state.images, selectedImage: state.selectedImage});
+const mapActionCreatorsToProps = dispatch => bindActionCreators(GalleryActions, dispatch);
 
-export default connect(mapStateToProps)(Gallery)
+export default connect(mapStateToProps, mapActionCreatorsToProps)(Gallery)

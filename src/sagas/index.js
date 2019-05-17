@@ -1,13 +1,13 @@
 import { fetchImg } from '../api/index';
-import { put, take, fork } from 'redux-saga/effects';
+import { put, take, fork, call } from 'redux-saga/effects';
 
 export function* loadImages() {
     try {
         const images = yield fetchImg();
-        yield put({ type: 'IMAGES_LOADED', images })
+        yield put({ type: 'IMAGES_LOADED', images });
         yield put({type: 'IMAGE_SELECTED', image: images[0]})
-    } catch (e) {
-        yield put({type: 'IMAGE_LOAD_FAILURE', e})
+    } catch (error) {
+        yield put({type: 'IMAGE_LOAD_FAILURE', error})
     }
 }
 
